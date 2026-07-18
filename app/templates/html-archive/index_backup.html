@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Compress - File Sharing & Optimization</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Langsung ke konten utama</a>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Navigasi utama">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 2L2 12H5V22H19V12H22L12 2Z" fill="currentColor" />
+            </svg>
+            <span>CloudCompress</span>
+        </div>
+
+        <nav class="nav-section" aria-label="Menu utama">
+            <p>Menu Utama</p>
+            <a href="#" class="nav-item active" aria-current="page">
+                <span aria-hidden="true">📤</span><span>Upload File</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span aria-hidden="true">📁</span><span>My Files</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span aria-hidden="true">⭐</span><span>Starred</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span aria-hidden="true">🗑️</span><span>Trash</span>
+            </a>
+        </nav>
+
+        <nav class="nav-section" aria-label="Folder divisi">
+            <p>Divisi</p>
+            <a href="#" class="nav-item">HR</a>
+            <a href="#" class="nav-item">Finance</a>
+            <a href="#" class="nav-item">IT</a>
+            <a href="#" class="nav-item">Marketing</a>
+            <a href="#" class="nav-item">Operations</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="top-bar">
+            <button type="button" class="menu-toggle" id="menuToggle" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="sidebar">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+
+            <div class="search-wrap">
+                <label for="searchInput" class="sr-only">Cari file atau folder</label>
+                <input type="search" id="searchInput" class="search-box" placeholder="Cari file atau folder...">
+            </div>
+
+            <button type="button" class="user-profile" aria-label="Menu akun pengguna">
+                <span aria-hidden="true">I</span>
+            </button>
+        </header>
+
+        <main class="content-body" id="main-content">
+            <div class="upload-card">
+                <h2>Upload File untuk Dikompresi</h2>
+                <form id="uploadForm" method="POST" enctype="multipart/form-data" novalidate>
+
+                    <div class="form-group">
+                        <label class="label" for="division">Pilih Divisi</label>
+                        <select name="division" id="division" required aria-describedby="divisionHelp">
+                            <option value="" disabled selected>-- Pilih Divisi --</option>
+                            <option value="HR">HR</option>
+                            <option value="Finance">Finance</option>
+                            <option value="IT">IT</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Operations">Operations</option>
+                        </select>
+                        <span id="divisionHelp" class="helper-text">File akan disimpan di folder divisi ini.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label" for="fileInput">File Dokumentasi</label>
+                        <div class="file-drop-zone" id="dropZone">
+                            <input type="file" name="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png" required aria-describedby="fileHelp">
+                            <div class="drop-zone-text" id="dropZoneText">
+                                Seret file ke sini atau <strong>klik untuk memilih</strong>
+                            </div>
+                            <div class="file-selected" id="fileSelected" hidden>
+                                <span class="file-icon" aria-hidden="true">📄</span>
+                                <span class="file-name" id="fileName"></span>
+                                <button type="button" class="file-remove" id="fileRemove" aria-label="Hapus file yang dipilih">✕</button>
+                            </div>
+                        </div>
+                        <span id="fileHelp" class="helper-text">Format PDF, JPG, atau PNG. Maksimal 10MB.</span>
+                        <span id="fileError" class="error-text" role="alert" hidden></span>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <span class="btn-text">Upload &amp; Compress</span>
+                        <span class="btn-spinner" aria-hidden="true" hidden></span>
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notifikasi -->
+    <div id="notification" class="notification" role="status" aria-live="polite"></div>
+
+    <script src="{{ url_for('static', path='script.js') }}"></script>
+</body>
+</html>

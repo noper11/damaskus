@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Damaskus Upload</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="background"></div>
+
+<nav>
+
+<div class="logo">
+<img src="logo-damaskus.png" style="width: 50px; height: auto;">
+</div>
+
+<ul>
+<li class="active">Upload</li>
+<li>Cloud Archive</li>
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<h1>Send super big files</h1>
+<p>Simple. Fast. Beautiful.</p>
+
+<div class="upload-card">
+
+<div class="drop-area" id="dropArea">
+
+<input type="file" id="fileInput" hidden>
+
+<div class="upload-icon">
+☁
+</div>
+
+<h2>Drop it like its hot!</h2>
+
+<p id="filename">or click to browse</p>
+
+</div>
+
+<div class="field">
+
+<label>Pilih Divisi / Choose Division</label>
+
+<select>
+<option>HR / IT</option>
+<option>Finance</option>
+<option>Marketing</option>
+<option>Operation</option>
+</select>
+
+</div>
+
+<div class="buttons">
+
+<button class="btn">
+Upload to cloud only
+</button>
+
+<button class="btn">
+Upload to cloud and airgap drive
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
