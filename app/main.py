@@ -16,8 +16,8 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # Setup templates directory (sama seperti default folder Flask yaitu 'templates')
 templates = Jinja2Templates(directory="templates")
 
-UPLOAD_FOLDER = '../uploads/temp'
-COMPRESSED_FOLDER = '../uploads/backup-folders/'
+UPLOAD_FOLDER = 'uploads/temp'
+COMPRESSED_FOLDER = 'uploads/backup-folders'
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(COMPRESSED_FOLDER, exist_ok=True)

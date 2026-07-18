@@ -1,0 +1,18 @@
+services:
+  damaskus-app:
+    image: damaskus
+    container_name: damaskus-container
+    restart: always
+    ports:
+      - "3333:3333"
+    volumes:
+      # Hubungkan folder uploads di dalam kontainer ke folder di server Anda
+      # Sesuaikan path host (/home/ilham/damaskus_data) sesuai kebutuhan Anda
+      - /mnt/airgap-backup/:/app/uploads/
+
+    healthcheck:
+      test: ["CMD","curl","-f","http://localhost:3333/damaskus"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
