@@ -1,5 +1,52 @@
-PENTING!!!
+# Damaskus FastAPI File Compressor
 
----belom---
-tambahan bikin script yang nge tar/zip tiap akhir bulan terus ngapus folder nya
-bikin .gitignore
+This repository contains a small FastAPI application that compresses uploaded files and stores them in an organized directory structure. It is designed for backing up files to cloud or an air‑gapped external HDD with the provided shell scripts.
+
+## Features
+
+- Upload images & PDFs for compression
+- Organise files by division and date
+- Simple HTML form for quick testing
+- Docker support for quick deployment
+- Scripts for automated cloud & air‑gap backups (cron jobs)
+
+## Installation (Docker)
+
+The application is shipped as a Docker image.  Build and run it with:
+
+```bash
+# Build the image
+# (the Dockerfile expects the working directory to be the project root)
+# Build and tag the image
+# The --no-cache flag can be omitted if caching is desired
+# docker build -f Dockerfile -t damaskus .
+
+# Run the container, mounting persistent storage and any external drives
+# Replace /mnt/airgap with the mount point of your air‑gapped HDD
+# The /app/uploads/backup-folders volume is where the backend writes archives
+# docker run --rm -p 3333:3333 \
+#        -v ./app/uploads/backup-folders:/app/uploads/backup-folders \
+#        -v /mnt/airgap:/mnt/airgap \
+#        damaskus
+```
+
+If you prefer to use docker‑compose, a sample `docker‑compose.yml` is provided in the repository.  Adjust the volume paths to match your environment.
+
+## Scripts
+
+The `scripts/` directory contains helper scripts intended to be run as cron jobs.  They perform a two‑step “air‑gap” or “cloud” backup step after the FastAPI service has finished uploading and compressing a file.
+
+* `to-cloud.sh`
+    * Expects the backup folder (`uploads/backup-folders`) to be mounted in the container.
+    * Copies the newest archives into a cloud‑mounted directory (e.g. an S3 bucket or NAS).  Modify the script to use your cloud provider’s CLI or sync tool.
+
+* `to-airgap.sh`
+    * Copies the archives into an externally mounted HDD (``/mnt/airgap``).  The script uses `rsync` or `cp` to ensure data integrity.  Update the destination mount point if it differs.
+
+Both scripts include a `-h`/`--help` flag that prints usage and expected environment variables, making them safe to schedule in `cron`.  Feel free to wrap them in a wrapper that selects `to-cloud` or `to-airgap` depending on the date or event.
+
+## Usage
+
+Visit `http://localhost:3333/damaskus` to open the upload form.  Choose a file and division, then submit.  The file will be stored under `uploads/backup-folders/<division>/<Month-Year-Division>/` with a date‑prefixed filename.
+
+---
